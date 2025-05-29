@@ -9,6 +9,6 @@ namespace ReporterDay.BusinessLayer.Abstract
 {
     public interface IArticleService : IGenericService<Article>
     {
-
+        public List<Article> TGetArticlesByCategoryId1();
     }
 }

@@ -23,6 +23,11 @@ namespace ReporterDay.BusinessLayer.Concrete
             _articleDal.Delete(id);
         }
 
+        public List<Article> TGetArticlesByCategoryId1()
+        {
+            return _articleDal.GetArticlesByCategoryId1();
+        }
+
         public Article TGetById(int id)
         {
            return _articleDal.GetById(id);
