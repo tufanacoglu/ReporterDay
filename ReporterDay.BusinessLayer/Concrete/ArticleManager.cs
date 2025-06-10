@@ -21,6 +21,7 @@ namespace ReporterDay.BusinessLayer.Concrete
         public void TDelete(int id)
         {
             _articleDal.Delete(id);
+
         }
 
         public List<Article> TGetArticlesByCategoryId1()
