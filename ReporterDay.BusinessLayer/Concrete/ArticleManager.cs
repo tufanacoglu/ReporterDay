@@ -29,6 +29,11 @@ namespace ReporterDay.BusinessLayer.Concrete
             return _articleDal.GetArticlesByCategoryId1();
         }
 
+        public List<Article> TGetArticlesWithAppUser()
+        {
+            return _articleDal.GetArticlesWithAppUser();
+        }
+
         public Article TGetById(int id)
         {
            return _articleDal.GetById(id);
