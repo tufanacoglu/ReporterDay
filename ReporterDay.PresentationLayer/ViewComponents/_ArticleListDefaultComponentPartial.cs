@@ -13,7 +13,7 @@ namespace ReporterDay.PresentationLayer.ViewComponents
         }
         public IViewComponentResult Invoke()
         {
-            var values = _articleService.TGetArticlesWithAppUser();
+            var values = _articleService.TGetArticlesWithCategoriesAndAppUsers();
             return View(values);
         }
     }

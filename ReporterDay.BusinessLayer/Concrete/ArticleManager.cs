@@ -18,10 +18,20 @@ namespace ReporterDay.BusinessLayer.Concrete
             _articleDal = articleDal;
         }
 
+        public List<Article> GetArticlesWithCategories()
+        {
+            return _articleDal.GetArticlesWithCategories();
+        }
+
         public void TDelete(int id)
         {
             _articleDal.Delete(id);
 
+        }
+
+        public List<Article> TGetArticlesByAuthor(string id)
+        {
+            return _articleDal.GetArticlesByAuthor(id);
         }
 
         public List<Article> TGetArticlesByCategoryId1()
@@ -32,6 +42,21 @@ namespace ReporterDay.BusinessLayer.Concrete
         public List<Article> TGetArticlesWithAppUser()
         {
             return _articleDal.GetArticlesWithAppUser();
+        }
+
+        public Article TGetArticlesWithAuthorAndCategoriesById(int id)
+        {
+            return _articleDal.GetArticlesWithAuthorAndCategoriesById(id);
+        }
+
+        public List<Article> TGetArticlesWithCategories()
+        {
+            return _articleDal.GetArticlesWithCategories();
+        }
+
+        public List<Article> TGetArticlesWithCategoriesAndAppUsers()
+        {
+            return _articleDal.GetArticlesWithCategoriesAndAppUsers();
         }
 
         public Article TGetById(int id)

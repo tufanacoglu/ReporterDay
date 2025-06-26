@@ -19,6 +19,12 @@ builder.Services.AddScoped<ISliderDal,EfSliderDal>();
 builder.Services.AddScoped<IArticleService,ArticleManager>();
 builder.Services.AddScoped<IArticleDal,EfArticleDal>();
 
+builder.Services.AddScoped<ITagService,TagManager>();
+builder.Services.AddScoped<ITagDal,EfTagDal>();
+
+builder.Services.AddScoped<ICommentService,CommentManager>();
+builder.Services.AddScoped<ICommentDal,EfCommentDal>();
+
 builder.Services.AddDbContext<ArticleContext>();
 
 builder.Services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<ArticleContext>();
@@ -38,6 +44,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapStaticAssets();
