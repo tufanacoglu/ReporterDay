@@ -10,5 +10,6 @@ namespace ReporterDay.DataAccessLayer.Abstract
     public interface ICommentDal : IGenericDal<Comment>
     {
         List<Comment> GetCommentsByArticleId(int id);
+        Task InsertAsync(Comment comment);
     }
 }

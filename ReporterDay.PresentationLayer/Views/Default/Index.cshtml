@@ -28,8 +28,8 @@
         </div><!-- End Page Title -->
 
 
-        @await Component.InvokeAsync("_ArticleListDefaultComponentPartial")
-
+        @* @await Component.InvokeAsync("_ArticleListDefaultComponentPartial") *@
+        @await Component.InvokeAsync("_ArticleListDefaultComponentPartial", new { page = 1, pageSize = 9 })
     </main>
 
     @await Component.InvokeAsync("_FooterDefaultComponentPartial")

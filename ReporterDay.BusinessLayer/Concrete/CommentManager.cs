@@ -43,6 +43,11 @@ namespace ReporterDay.BusinessLayer.Concrete
            _commentDal.Insert(entity);
         }
 
+        public async Task TInsertAsync(Comment comment)
+        {
+            await _commentDal.InsertAsync(comment);
+        }
+
         public void TUpdate(Comment entity)
         {
            _commentDal.Update(entity);

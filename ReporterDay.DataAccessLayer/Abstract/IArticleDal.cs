@@ -16,5 +16,8 @@ namespace ReporterDay.DataAccessLayer.Abstract
 
         Article GetArticlesWithAuthorAndCategoriesById(int id);
         List<Article> GetArticlesByAuthor(string id);
+        Task<List<Article>> GetPagedArticlesAsync(int page, int pageSize);
+        Task<int> GetTotalArticleCountAsync();
+        List<Article> GetPagedArticlesWithCategoriesAndAppUsers(int page, int pageSize);
     }
 }

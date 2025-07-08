@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ReporterDay.BusinessLayer.Abstract;
+using ReporterDay.BusinessLayer.Utilities;
 using ReporterDay.DataAccessLayer.Abstract;
 using ReporterDay.EntityLayer.Entities;
 
@@ -69,10 +70,35 @@ namespace ReporterDay.BusinessLayer.Concrete
             return _articleDal.GetListAll();
         }
 
+        public Task<List<Article>> TGetPagedArticlesAsync(int page, int pageSize)
+        {
+            return _articleDal.GetPagedArticlesAsync(page,pageSize);
+        }
+        public List<Article> TGetPagedArticlesWithCategoriesAndAppUsers(int page, int pageSize)
+        {
+            return _articleDal.GetPagedArticlesWithCategoriesAndAppUsers(page, pageSize);
+        }
+
+        public double TGetTotalArticleCount()
+        {
+            throw new NotImplementedException();
+        }
+
+        //public double TGetTotalArticleCount()
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        public async Task<int> TGetTotalArticleCountAsync()
+        {
+            return await _articleDal.GetTotalArticleCountAsync();
+        }
+
         public void TInsert(Article entity)
         {
             if (entity.Title!=null && entity.Title.Length>10 && entity.CategoryId!=0 && entity.Content.Length <=1000)
             {
+                entity.Slug = SlugHelper.GenerateSlug(entity.Title);
                 _articleDal.Insert(entity);
             }
             else

@@ -1,0 +1,17 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-title position-relative">
+    <div class="container d-lg-flex justify-content-between align-items-center">
+        <h1 class="mb-2 mb-lg-0">Category</h1>
+        <nav class="breadcrumbs">
+            <ol>
+                <li><a href="/">Home</a></li>
+                <li class="current">Categories</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+@await Component.InvokeAsync("_ArticleListDefaultComponentPartial", new { page = 1, pageSize = 9 })

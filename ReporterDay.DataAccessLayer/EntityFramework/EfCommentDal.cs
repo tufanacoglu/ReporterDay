@@ -25,5 +25,11 @@ namespace ReporterDay.DataAccessLayer.EntityFramework
             var values = _context.Comments.Include(y=>y.AppUser).Where(x => x.ArticleId == id);
             return values.ToList();
         }
+
+        public async Task InsertAsync(Comment comment)
+        {
+            await _context.Comments.AddAsync(comment);
+            await _context.SaveChangesAsync();
+        }
     }
 }

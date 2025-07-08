@@ -1,26 +1,86 @@
 ﻿@model List<ReporterDay.EntityLayer.Entities.Comment>
 
-﻿<section id="blog-comments" class="blog-comments section">
-
+<section id="blog-comments" class="blog-comments section">
     <div class="container">
+        <h4 class="comments-count">@Model.Count Yorum</h4>
 
-        <h4 class="comments-count">0 Yorum</h4>
-
-        @foreach(var item in Model)
+        @foreach (var item in Model)
         {
-        <div id="comment-1" class="comment">
-            <div class="d-flex">
-                <div class="comment-img"><img src="@item.AppUser.ImageUrl" alt=""></div>
-                <div>
-                    <h5><a href="">@item.AppUser.Name @item.AppUser.SurName</a> <a href="#" class="reply"><i class="bi bi-reply-fill"></i> Yanıtla</a></h5>
-                    <time datetime="2020-01-01">@item.CommentDate.ToString("dd-MMM-yyyy")</time>
-                    <p>
-                        @item.CommentDetail
-                    </p>
+            <div id="comment-@item.CommentId" class="comment">
+                <div class="d-flex">
+                    <div class="comment-img">
+                        <img src="@item.AppUser.ImageUrl" alt="">
+                    </div>
+                    <div>
+                        <h5>
+                            <a href="">@item.AppUser.Name @item.AppUser.SurName</a>
+                            <a href="#" class="reply"><i class="bi bi-reply-fill"></i> Yanıtla</a>
+                        </h5>
+                        <time datetime="2020-01-01">@item.CommentDate.ToString("dd-MMM-yyyy")</time>
+
+                        <p>
+                            @item.CommentDetail
+                        </p>
+
+                        @if (item.IsToxic)
+                        {
+                            <p style="color:red;">⚠️ Bu yorum toksik içerik barındırıyor.</p>
+                        }
+                    </div>
                 </div>
             </div>
-        </div><!-- End comment #1 -->
         }
     </div>
-
 </section>
+
+@if (User.Identity.IsAuthenticated)
+{
+    <section id="comment-form" class="comment-form section">
+        <div class="container">
+            <form id="commentForm">
+                <h4>Yorum Yapma Paneli</h4>
+                <input type="hidden" name="articleId" value="@ViewBag.ArticleId" />
+                <div class="row">
+                    <div class="col form-group">
+                        <textarea name="commentText" class="form-control" placeholder="Yorumunuzu buraya yazabilirsiniz..." required></textarea>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Yorumu Gönder</button>
+                </div>
+            </form>
+            <div id="commentResult" style="margin-top:10px;"></div>
+        </div>
+    </section>
+}
+else
+{
+    <div class="container">
+        <p>Yorum yapmak için lütfen <a href="/Login/UserLogin">giriş yapın</a>.</p>
+    </div>
+}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $("#commentForm").submit(function (e) {
+        e.preventDefault();
+        var formData = $(this).serialize();
+
+        $.ajax({
+            type: "POST",
+            url: "/Article/AddComment",
+            data: formData,
+            success: function (response) {
+                if (response.success) {
+                    $("#commentResult").html("✅ " + response.message);
+                    $("#commentForm")[0].reset();
+                } else {
+                    $("#commentResult").html("❌ " + response.message);
+                }
+            },
+            error: function () {
+                $("#commentResult").html("❌ Bir hata oluştu, lütfen tekrar deneyin.");
+            }
+        });
+    });
+</script>

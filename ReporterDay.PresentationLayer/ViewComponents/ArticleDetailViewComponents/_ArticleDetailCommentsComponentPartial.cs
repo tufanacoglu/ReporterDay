@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ReporterDay.BusinessLayer.Abstract;
+using ReporterDay.BusinessLayer.Utilities;
 
 namespace ReporterDay.PresentationLayer.ViewComponents.ArticleDetailViewComponents
 {
@@ -12,9 +13,16 @@ namespace ReporterDay.PresentationLayer.ViewComponents.ArticleDetailViewComponen
             _commentService = commentService;
         }
 
-        public IViewComponentResult Invoke(int id)
+        public async Task<IViewComponentResult> InvokeAsync(int id)
         {
-          var values = _commentService.TGetCommentsByArticleId(id);
+            var values = _commentService.TGetCommentsByArticleId(id);
+            var checker = new ToxicContentChecker();
+
+            foreach (var comment in values)
+            {
+                comment.IsToxic = await checker.IsToxicAsync(comment.CommentDetail);
+            }
+
             return View(values);
         }
     }

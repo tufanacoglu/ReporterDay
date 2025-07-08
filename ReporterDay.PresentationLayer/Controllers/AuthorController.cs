@@ -51,5 +51,9 @@ namespace ReporterDay.PresentationLayer.Controllers
             var values = _articleService.TGetArticlesByAuthor(user.Id);
             return View(values);
         }
+        public IActionResult Index()
+        {
+            return View();
+        }
     }
 }

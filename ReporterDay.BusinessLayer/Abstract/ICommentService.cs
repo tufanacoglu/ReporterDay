@@ -10,5 +10,6 @@ namespace ReporterDay.BusinessLayer.Abstract
     public interface ICommentService : IGenericService<Comment>
     {
         List<Comment> TGetCommentsByArticleId(int id);
+        Task TInsertAsync(Comment comment);
     }
 }

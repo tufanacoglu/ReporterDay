@@ -1,13 +1,15 @@
 ﻿<section id="comment-form" class="comment-form section">
     <div class="container">
 
-        <form action="">
+        <form id="commentForm">
 
             <h4>Yorum Yapma Paneli</h4>
 
+            <input type="hidden" name="articleId" value="@ViewBag.ArticleId" />
+
             <div class="row">
                 <div class="col form-group">
-                    <textarea name="comment" class="form-control" placeholder="Yorumunuzu buraya yazabilirsiniz..."></textarea>
+                    <textarea name="commentText" class="form-control" placeholder="Yorumunuzu buraya yazabilirsiniz..." required></textarea>
                 </div>
             </div>
 
@@ -17,5 +19,32 @@
 
         </form>
 
+        <div id="commentResult" style="margin-top:10px;"></div>
+
     </div>
 </section>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $("#commentForm").submit(function(e) {
+        e.preventDefault();
+        var formData = $(this).serialize();
+
+        $.ajax({
+            type: "POST",
+            url: "/Article/AddComment",
+            data: formData,
+            success: function(response) {
+                if (response.success) {
+                    $("#commentResult").html("✅ " + response.message);
+                    $("#commentForm")[0].reset();
+                } else {
+                    $("#commentResult").html("❌ " + response.message);
+                }
+            },
+            error: function() {
+                $("#commentResult").html("❌ Bir hata oluştu, lütfen tekrar deneyin.");
+            }
+        });
+    });
+</script>

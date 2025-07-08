@@ -39,8 +39,10 @@ namespace ReporterDay.DataAccessLayer.EntityFramework
 
         public Article GetArticlesWithAuthorAndCategoriesById(int id)
         {
-            var values = _context.Articles.Include(x=>x.AppUser).Include(y=>y.Category).Where(z=>z.ArticleId==id).FirstOrDefault();
-            return values;
+            return _context.Articles
+                .Include(x => x.Category)
+                .Include(x => x.AppUser) // ✅ AppUser Include edildi
+                .FirstOrDefault(x => x.ArticleId == id);
         }
 
         public List<Article> GetArticlesWithCategories()
@@ -51,6 +53,31 @@ namespace ReporterDay.DataAccessLayer.EntityFramework
         public List<Article> GetArticlesWithCategoriesAndAppUsers()
         {
             return _context.Articles.Include(x=> x.Category).Include(y=>y.AppUser).ToList();
+        }
+
+        public async Task<List<Article>> GetPagedArticlesAsync(int page, int pageSize)
+        {
+            return await _context.Articles
+        .OrderByDescending(x => x.CreatedDate)
+        .Skip((page - 1) * pageSize)
+        .Take(pageSize)
+        .ToListAsync();
+        }
+
+        public List<Article> GetPagedArticlesWithCategoriesAndAppUsers(int page, int pageSize)
+        {
+            return _context.Articles
+                .Include(x => x.AppUser)
+                .Include(x => x.Category)
+                .OrderByDescending(x => x.CreatedDate)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+        }
+
+        public async Task<int> GetTotalArticleCountAsync()
+        {
+            return await _context.Articles.CountAsync();
         }
     }
 }

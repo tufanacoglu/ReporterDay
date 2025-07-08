@@ -28,5 +28,10 @@ namespace ReporterDay.PresentationLayer.Controllers
             }
             return View();
         }
+        public async Task<IActionResult> LogOut()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("UserLogin", "Login");
+        }
     }
 }

@@ -19,5 +19,6 @@ namespace ReporterDay.EntityLayer.Entities
         public string? AppUserId { get; set; }
         public AppUser AppUser { get; set; }
         public List<Comment> Comments { get; set; }
+        public string Slug { get; set; }
     }
 }

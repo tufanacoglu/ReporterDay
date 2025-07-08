@@ -11,9 +11,15 @@ namespace ReporterDay.PresentationLayer.ViewComponents
         {
             _articleService = articleService;
         }
-        public IViewComponentResult Invoke()
+
+        public async Task<IViewComponentResult> InvokeAsync(int page, int pageSize)
         {
-            var values = _articleService.TGetArticlesWithCategoriesAndAppUsers();
+            var values = _articleService.TGetPagedArticlesWithCategoriesAndAppUsers(page, pageSize);
+            var totalCount = await _articleService.TGetTotalArticleCountAsync();
+
+            ViewBag.TotalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+            ViewBag.CurrentPage = page;
+
             return View(values);
         }
     }
