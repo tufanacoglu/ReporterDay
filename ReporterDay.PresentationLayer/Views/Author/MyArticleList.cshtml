@@ -5,10 +5,29 @@
 }
 
 <h2>Makale Listeniz</h2>
-
-<ul>
-	@foreach (var item in Model)
-	{
-		<li>@item.Title</li>
-	}
-</ul>
+<link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+<div class="container">
+    <table class="table table-bordered">
+        <tr>
+            <th>#</th>
+            <th>Makale Başlığı</th>
+            <th>Oluşturma Tarihi</th>
+            <th>Makale İçeriği</th>
+            <th>Makale Görseli</th>
+            <th>Sil</th>
+            <th>Güncelle</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ArticleId</td>
+                <td>@item.Title</td>
+                <td>@item.CreatedDate</td>
+                <td>@(item.Content.Length > 100 ? item.Content.Substring(0, 100) + "..." : item.Content)</td>
+                <td><img src="@item.CoverImageUrl" alt="Kapak Görseli" style="width:100px; height:auto;" /></td>
+                <td><a href="/Category/DeleteCategory/@item.CategoryId" class="btn btn-danger">Sil</a></td>
+                <td><a href="/Category/UpdateCategory/@item.CategoryId" class="btn btn-success">Güncelle</a></td>
+            </tr>
+        }
+    </table>
+</div>
